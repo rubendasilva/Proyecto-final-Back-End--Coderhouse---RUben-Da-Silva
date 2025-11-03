@@ -1,0 +1,69 @@
+[
+    {
+        "id": "1",
+        "title": "Teclado Mecánico RGB",
+        "description": "Teclado mecánico retroiluminado con switches azules.",
+        "code": "KB-001",
+        "price": 89.99,
+        "status": true,
+        "stock": 35,
+        "category": "Periféricos",
+        "thumbnails": [
+            "img/teclado1.jpg",
+            "img/teclado2.jpg"
+        ]
+    },
+    {
+        "id": "2",
+        "title": "Mouse Inalámbrico",
+        "description": "Mouse ergonómico inalámbrico con batería recargable.",
+        "code": "MS-002",
+        "price": 39.99,
+        "status": true,
+        "stock": 50,
+        "category": "Periféricos",
+        "thumbnails": [
+            "img/mouse1.jpg"
+        ]
+    },
+    {
+        "id": "3",
+        "title": "Monitor 24 pulgadas Full HD",
+        "description": "Monitor LED 24'' Full HD con entrada HDMI y VGA.",
+        "code": "MN-003",
+        "price": 159.99,
+        "status": true,
+        "stock": 20,
+        "category": "Monitores",
+        "thumbnails": [
+            "img/monitor1.jpg"
+        ]
+    },
+    {
+        "id": "4",
+        "title": "Auriculares Gamer",
+        "description": "Auriculares con micrófono y luces LED, sonido envolvente.",
+        "code": "HP-004",
+        "price": 59.99,
+        "status": true,
+        "stock": 40,
+        "category": "Audio",
+        "thumbnails": [
+            "img/headset1.jpg"
+        ]
+    },
+    {
+        "id": "5",
+        "title": "Silla ergonómica",
+        "description": "Silla ajustable para oficina con soporte lumbar.",
+        "code": "CH-005",
+        "price": 199.99,
+        "status": true,
+        "stock": 15,
+        "category": "Mobiliario",
+        "thumbnails": [
+            "img/silla1.jpg",
+            "img/silla2.jpg"
+        ]
+    }
+]
