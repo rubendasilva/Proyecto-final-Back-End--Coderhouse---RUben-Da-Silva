@@ -1,0 +1,131 @@
+<h2 class="page-title">Real Time Products</h2>
+<p class="page-subtitle">
+    Agregá o eliminá productos y mirá cómo la lista se actualiza en tiempo real usando WebSockets.
+</p>
+
+<div class="grid-2">
+    <section class="card">
+        <div class="card-header">
+            <span class="card-title">Crear nuevo producto</span>
+            <span class="card-meta">Los cambios se envían via WebSocket</span>
+        </div>
+
+        <form id="productForm">
+            <div class="form-grid">
+                <div class="form-field">
+                    <label for="title">Título</label>
+                    <input id="title" name="title" placeholder="Ej: Teclado Mecánico RGB" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="code">Código</label>
+                    <input id="code" name="code" placeholder="Ej: KB-001" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="price">Precio</label>
+                    <input id="price" name="price" type="number" step="0.01" placeholder="Ej: 89.99" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="stock">Stock</label>
+                    <input id="stock" name="stock" type="number" placeholder="Ej: 35" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="category">Categoría</label>
+                    <input id="category" name="category" placeholder="Ej: Periféricos" required>
+                </div>
+
+                <div class="form-field" style="grid-column: 1 / -1;">
+                    <label for="thumbnails">
+                        URL(s) de imagen
+                        <span style="color: var(--muted); font-size: 0.8rem;">
+                            (una o varias, separadas por coma)
+                        </span>
+                    </label>
+                    <input id="thumbnails" name="thumbnails"
+                        placeholder="Ej: https://ejemplo.com/img1.jpg, https://ejemplo.com/img2.jpg">
+                </div>
+
+                <div class="form-field" style="grid-column: 1 / -1;">
+                    <label for="description">Descripción</label>
+                    <textarea id="description" name="description"
+                        placeholder="Ej: Teclado mecánico retroiluminado con switches azules..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-inline">
+                <input type="checkbox" id="status" name="status" checked>
+                <label for="status">Producto activo</label>
+            </div>
+
+            <button type="submit" class="btn-primary">
+                + Crear producto
+            </button>
+        </form>
+    </section>
+
+    <section class="card">
+        <div class="card-header">
+            <span class="card-title">Productos en tiempo real</span>
+            <span class="card-meta">
+                Se actualizan automáticamente al crear o eliminar.
+            </span>
+        </div>
+
+        <div id="productsContainer">
+            <div id="productsList" class="products-grid">
+                {{#if products.length}}
+                {{#each products}}
+                <article class="product-card" data-id="{{this.id}}">
+                    <div class="product-image-wrap">
+                        {{#if this.thumbnails}}
+                        {{#each this.thumbnails}}
+                        {{#if @first}}
+                        <img src="{{this}}" alt="{{../title}}" class="product-image">
+                        {{/if}}
+                        {{/each}}
+                        {{else}}
+                        <img src="https://via.placeholder.com/400x250?text=Sin+imagen" alt="Sin imagen"
+                            class="product-image">
+                        {{/if}}
+
+                        <span class="product-status-pill {{#unless status}}off{{/unless}}">
+                            {{#if status}}Activo{{else}}Inactivo{{/if}}
+                        </span>
+                    </div>
+
+                    <div class="product-body">
+                        <div class="product-title">{{this.title}}</div>
+                        <div class="product-code">Código: {{this.code}}</div>
+                        <p class="product-description">{{this.description}}</p>
+                        <div class="product-meta-row">
+                            <span class="product-price">$ {{this.price}}</span>
+                            <span class="product-stock">Stock: {{this.stock}}</span>
+                        </div>
+                    </div>
+
+                    <div class="product-footer">
+                        <button class="btn-ghost-danger btn-delete">
+                            Eliminar
+                        </button>
+                    </div>
+                </article>
+                {{/each}}
+                {{else}}
+                <p class="empty-state">No hay productos todavía. Crea uno desde el formulario 👆</p>
+                {{/if}}
+            </div>
+        </div>
+    </section>
+</div>
+
+{{!-- SweetAlert2 CDN --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{{!-- Socket.io --}}
+<script src="/socket.io/socket.io.js"></script>
+
+{{!-- JS propio --}}
+<script src="/js/realTimeProducts.js"></script>

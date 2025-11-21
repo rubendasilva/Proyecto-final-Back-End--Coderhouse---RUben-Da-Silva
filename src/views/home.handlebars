@@ -1,0 +1,46 @@
+<h2 class="page-title">Listado de productos (Home)</h2>
+<p class="page-subtitle">Vista estática con todos los productos almacenados.</p>
+
+<div class="card">
+    <div class="card-header">
+        <span class="card-title">Productos</span>
+        <span class="card-meta">{{products.length}} productos</span>
+    </div>
+
+    {{#if products.length}}
+    <div class="products-grid">
+        {{#each products}}
+        <article class="product-card">
+            <div class="product-image-wrap">
+                {{#if thumbnails}}
+                {{#each thumbnails}}
+                {{#if @first}}
+                <img src="{{this}}" alt="{{../title}}" class="product-image">
+                {{/if}}
+                {{/each}}
+                {{else}}
+                <img src="https://via.placeholder.com/400x250?text=Sin+imagen" alt="Sin imagen" class="product-image">
+                {{/if}}
+
+                <span class="product-status-pill {{#unless status}}off{{/unless}}">
+                    {{#if status}}Activo{{else}}Inactivo{{/if}}
+                </span>
+            </div>
+
+            <div class="product-body">
+                <div class="product-title">{{title}}</div>
+                <div class="product-code">Código: {{code}}</div>
+                <p class="product-description">{{description}}</p>
+
+                <div class="product-meta-row">
+                    <span class="product-price">$ {{price}}</span>
+                    <span class="product-stock">Stock: {{stock}}</span>
+                </div>
+            </div>
+        </article>
+        {{/each}}
+    </div>
+    {{else}}
+    <p class="empty-state">No hay productos cargados.</p>
+    {{/if}}
+</div>
