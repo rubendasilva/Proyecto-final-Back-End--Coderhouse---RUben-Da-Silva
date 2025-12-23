@@ -14,7 +14,7 @@ function renderProducts(products) {
 
     products.forEach(prod => {
         const li = document.createElement('li');
-        li.dataset.id = prod.id;
+        li.dataset.id = prod._id;
         li.innerHTML = `
       <strong>${prod.title}</strong> - $${prod.price}
       (Stock: ${prod.stock})

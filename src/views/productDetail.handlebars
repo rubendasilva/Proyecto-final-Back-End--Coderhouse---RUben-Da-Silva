@@ -1,0 +1,46 @@
+<h2 class="page-title">Detalle de producto</h2>
+
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">{{product.title}}</span>
+    <span class="card-meta">Código: {{product.code}}</span>
+  </div>
+
+  <div style="display:grid; gap:16px; grid-template-columns: 1fr 1fr; align-items:start;">
+    <div>
+      {{#if product.thumbnails}}
+        {{#each product.thumbnails}}
+          {{#if @first}}
+            <img src="{{this}}" alt="{{../product.title}}" style="width:100%; border-radius:12px;">
+          {{/if}}
+        {{/each}}
+      {{else}}
+        <img src="https://via.placeholder.com/800x500?text=Sin+imagen" alt="Sin imagen" style="width:100%; border-radius:12px;">
+      {{/if}}
+    </div>
+    <div>
+      <p><strong>Precio:</strong> $ {{product.price}}</p>
+      <p><strong>Categoría:</strong> {{product.category}}</p>
+      <p><strong>Stock:</strong> {{product.stock}}</p>
+      <p><strong>Disponible:</strong> {{#if product.status}}Sí{{else}}No{{/if}}</p>
+      <p style="margin-top:12px;">{{product.description}}</p>
+
+      <div style="display:flex; gap:10px; margin-top:16px;">
+        <a class="btn" href="/products">Volver</a>
+        <a class="btn btn-primary" href="#" data-add-to-cart data-pid="{{product._id}}">Agregar al carrito</a>
+      </div>
+
+      <p style="margin-top:12px;">Ver mi carrito: <a href="#" id="openCartLink">Abrir /carts/&lt;cartId&gt;</a></p>
+    </div>
+  </div>
+</div>
+
+<script src="/js/cartActions.js"></script>
+<script>
+  document.getElementById('openCartLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    const cid = localStorage.getItem('cartId');
+    if (!cid) return alert('Todavía no tenés un carrito. Agregá un producto primero.');
+    window.location.href = `/carts/${cid}`;
+  });
+</script>

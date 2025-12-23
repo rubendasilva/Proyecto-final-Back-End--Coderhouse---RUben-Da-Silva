@@ -1,9 +1,11 @@
+require("dotenv").config();
+
 const http = require('http');
-const path = require('path');
 const { Server } = require('socket.io');
 
 const app = require('./src/app');
-const ProductManager = require('./src/managers/ProductManager');
+const { connectDB } = require('./src/config/db');
+const Product = require('./src/models/Product');
 
 const PORT = 8080;
 
@@ -13,21 +15,18 @@ const httpServer = http.createServer(app);
 // Socket.io
 const io = new Server(httpServer);
 
-// ProductManager para usar desde sockets
-const manager = new ProductManager(
-    path.join(__dirname, 'src', 'data', 'products.json')
-);
+connectDB().catch((e) => console.error('Mongo connection error:', e.message));
 
 io.on('connection', async (socket) => {
     console.log('Nuevo cliente conectado', socket.id);
 
     // Enviar lista inicial
-    const products = await manager.getAll();
+    const products = await Product.find().lean();
     socket.emit('productsUpdated', products);
 
     // Cliente pide refrescar lista
     socket.on('getProducts', async () => {
-        const products = await manager.getAll();
+        const products = await Product.find().lean();
         socket.emit('productsUpdated', products);
     });
 
@@ -42,8 +41,8 @@ io.on('connection', async (socket) => {
                     .filter(Boolean);
             }
 
-            await manager.add(productData);
-            const products = await manager.getAll();
+            await Product.create(productData);
+            const products = await Product.find().lean();
             io.emit('productsUpdated', products); // avisar a todos
             socket.emit('actionOk', 'Producto creado correctamente');
         } catch (e) {
@@ -54,8 +53,8 @@ io.on('connection', async (socket) => {
     // Borrar producto
     socket.on('deleteProduct', async (productId) => {
         try {
-            await manager.delete(productId);
-            const products = await manager.getAll();
+            await Product.findByIdAndDelete(productId);
+            const products = await Product.find().lean();
             io.emit('productsUpdated', products);
             socket.emit('actionOk', 'Producto eliminado correctamente');
         } catch (e) {

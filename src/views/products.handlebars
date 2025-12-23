@@ -1,0 +1,51 @@
+<h2 class="page-title">Productos</h2>
+<p class="page-subtitle">Listado con paginación (limit/page/sort/query).</p>
+
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">Página {{page}} / {{totalPages}}</span>
+  </div>
+
+  {{#if products.length}}
+  <div class="products-grid">
+    {{#each products}}
+    <article class="product-card">
+      <div class="product-image-wrap">
+        {{#if thumbnails}}
+          {{#each thumbnails}}
+            {{#if @first}}
+              <img src="{{this}}" alt="{{../title}}" class="product-image">
+            {{/if}}
+          {{/each}}
+        {{else}}
+          <img src="https://via.placeholder.com/400x250?text=Sin+imagen" alt="Sin imagen" class="product-image">
+        {{/if}}
+      </div>
+
+      <div class="product-body">
+        <div class="product-title">{{title}}</div>
+        <div class="product-code">Categoría: {{category}}</div>
+        <div class="product-meta-row">
+          <span class="product-price">$ {{price}}</span>
+          <span class="product-stock">Stock: {{stock}}</span>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          <a class="btn" href="/products/{{_id}}">Ver detalle</a>
+          <a class="btn btn-primary" href="#" data-add-to-cart data-pid="{{_id}}">Agregar al carrito</a>
+        </div>
+      </div>
+    </article>
+    {{/each}}
+  </div>
+  {{else}}
+    <p class="empty-state">No hay productos.</p>
+  {{/if}}
+
+  <div style="display:flex; justify-content:space-between; margin-top:16px;">
+    {{#if prevLink}}<a class="btn" href="{{prevLink}}">Anterior</a>{{else}}<span></span>{{/if}}
+    {{#if nextLink}}<a class="btn" href="{{nextLink}}">Siguiente</a>{{/if}}
+  </div>
+</div>
+
+<script src="/js/cartActions.js"></script>

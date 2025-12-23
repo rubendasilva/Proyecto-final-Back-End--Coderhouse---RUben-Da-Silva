@@ -2,11 +2,17 @@ const express = require('express');
 const path = require('path');
 const { engine } = require('express-handlebars');
 
+const { connectDB } = require('./config/db');
+
 const productsRouter = require('./routes/products.router');
 const cartsRouter = require('./routes/carts.router');
 const viewsRouter = require('./routes/views.router');
 
 const app = express();
+
+connectDB().catch((e) => {
+    console.error('Mongo connection error:', e.message);
+});
 
 // Middlewares
 app.use(express.json());

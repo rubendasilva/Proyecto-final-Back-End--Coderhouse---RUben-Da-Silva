@@ -1,0 +1,27 @@
+<h2 class="page-title">Carrito</h2>
+<p class="page-subtitle">Cart ID: {{cartId}}</p>
+
+<div class="card">
+  {{#if products.length}}
+    <div class="products-grid">
+      {{#each products}}
+        <article class="product-card">
+          <div class="product-body">
+            <div class="product-title">{{this.product.title}}</div>
+            <div class="product-code">Cantidad: {{this.quantity}}</div>
+            <div class="product-meta-row">
+              <span class="product-price">$ {{this.product.price}}</span>
+              <span class="product-stock">Stock: {{this.product.stock}}</span>
+            </div>
+          </div>
+        </article>
+      {{/each}}
+    </div>
+  {{else}}
+    <p class="empty-state">Este carrito está vacío.</p>
+  {{/if}}
+
+  <div style="display:flex; gap:10px; margin-top:16px;">
+    <a class="btn" href="/products">Volver a productos</a>
+  </div>
+</div>
